@@ -1034,7 +1034,8 @@ function unlockMedia() {
   sfx.ctx?.resume();
   analyseMusic();
   video.muted = false;
-  video.play().then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+  video.play().then(() => { video.pause(); video.currentTime = 0; }).catch(() => {})
+    .finally(() => music.play().catch(() => {}));
 }
 
 function fadeMusic(to, ms = 600) {
@@ -1068,8 +1069,23 @@ async function playVideo() {
   fadeMusic(MUSIC_VOL);
 }
 
-let T0 = 0;
-const songT = () => !music.paused && music.currentTime > 0 ? music.currentTime : (performance.now() - T0) / 1000;
+let T0 = 0, songStarted = false, finished = false, held = [];
+music.addEventListener('playing', () => { songStarted = true; }, { once: true });
+const songT = () => songStarted ? music.currentTime : (performance.now() - T0) / 1000;
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    held = [music, video].filter(m => !m.paused);
+    held.forEach(m => m.pause());
+    sfx.ctx?.suspend();
+  } else {
+    if (finished) return;
+    sfx.ctx?.resume();
+    (held.includes(video) ? [video] : held).forEach(m => m.play().catch(() => {}));
+    held = [];
+  }
+});
+addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
 const at = sec => new Promise(ok => (function chk() { songT() >= sec ? ok() : requestAnimationFrame(chk); })());
 
 function reset(el, text) {
@@ -1232,6 +1248,12 @@ async function run() {
   await wait(700);
   tail.forEach((el, i) => el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }],
     { duration: 800, delay: i * 300, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }));
+  await wait(1500);
+  finished = true;
+  sfx.mute(true);
+  fadeMusic(0, 2500);
+  await wait(2600);
+  music.pause();
 }
 
 $('#replay').onclick = () => location.reload();
