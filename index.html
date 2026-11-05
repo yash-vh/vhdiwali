@@ -135,6 +135,11 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
   background:radial-gradient(130% 90% at 50% 105%,rgba(var(--night),.6),rgba(var(--night),.94) 70%)}
 #toran .fl{filter:brightness(.35) saturate(.7);transition:filter 1.4s ease}
 #toran.on .fl{filter:none}
+#latkans{position:fixed;top:0;left:0;width:100%;z-index:4;pointer-events:none}
+#latkans .lk{position:absolute;top:0;overflow:visible;transform-origin:50% 3px;animation:swing 3.4s ease-in-out infinite alternate;will-change:transform;
+  filter:brightness(.35) saturate(.7);transition:filter 1.4s ease}
+#latkans.on .lk{filter:none}
+@keyframes swing{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
 #toran .bulb{opacity:.1;transition:opacity .3s ease}
 #toran .bulb.on,#toran.lit .bulb{opacity:1}
 #stars{scale:1.1}
@@ -180,6 +185,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 <div id="lanterns"></div>
 <div id="veil"></div>
 <canvas id="fx"></canvas>
+<div id="latkans" aria-hidden="true"></div>
 <svg id="toran" aria-hidden="true"></svg>
 <div id="diyas" aria-hidden="true"></div>
 
@@ -379,7 +385,7 @@ function buildToran() {
       bulbs += `<g class="bulb" data-x="${x | 0}" style="animation-delay:-${rnd(0, 1.6).toFixed(2)}s"><circle class="bh" cx="${x.toFixed(1)}" cy="${(y + fr * .95).toFixed(1)}" r="${(fr * 1.05).toFixed(1)}" fill="url(#gBulb)"/><circle cx="${x.toFixed(1)}" cy="${(y + fr * .95).toFixed(1)}" r="${mob ? 1.4 : 1.8}" fill="#fff4cc"/></g>`;
     }
   }
-  const L = mob ? 20 : 28;
+  const L = mob ? 20 : 28, lw = Math.ceil(Math.max(fr * 2.6, L * 1.4) + 6), lh = Math.ceil(6 + fr * 7.5);
   for (let i = 0; i <= n; i++) {
     const x = i * seg, leaf = a => `<g transform="translate(${x.toFixed(1)} 5) rotate(${a})"><path d="M0 0C${L * .32} ${L * .3} ${L * .2} ${L * .8} 0 ${L}C${-L * .2} ${L * .8} ${-L * .32} ${L * .3} 0 0Z" fill="url(#gLeaf)"/><path d="M0 1V${L - 2}" stroke="#a5d6a7" stroke-width=".7" opacity=".7"/></g>`;
     let g = leaf(-38) + leaf(38) + leaf(0);
@@ -388,10 +394,12 @@ function buildToran() {
     [1.05, .92, .8].forEach((f, q) => { g += flower(x, y, fr * f, q === 1 ? 2 : q ? 1 : 0); y += fr * f * 1.55; });
     const b = fr * .75;
     g += `<path d="M${x - b} ${y + b * 1.3}Q${x - b} ${y - b * .2} ${x} ${y - b * .3}Q${x + b} ${y - b * .2} ${x + b} ${y + b * 1.3}Z" fill="url(#gBell)"/><circle cx="${x}" cy="${y + b * 1.45}" r="${b * .3}" fill="#c46d0c"/>`;
-    lat += `<g class="latkan" style="transform-origin:${x.toFixed(1)}px 3px;animation-delay:-${rnd(0, 3.4).toFixed(2)}s">${g}</g>`;
+    lat += `<svg class="lk" width="${lw}" height="${lh}" viewBox="${(x - lw / 2).toFixed(1)} 0 ${lw} ${lh}" style="left:${(x - lw / 2).toFixed(1)}px;animation-delay:-${rnd(0, 3.4).toFixed(2)}s">${g}</svg>`;
   }
   svg.setAttribute('width', W); svg.setAttribute('height', Math.ceil(Math.max(sag * 2 + fr * 2.4, 6 + fr * 6.5 + L * .2)));
-  svg.innerHTML = `<g class="fl"><path d="${rope}" stroke="#7a1f0c" stroke-width="1.4" fill="none"/>${lat}${fl}</g>${bulbs}`;
+  svg.innerHTML = `<g class="fl"><path d="${rope}" stroke="#7a1f0c" stroke-width="1.4" fill="none"/>${fl}</g>${bulbs}`;
+  $('#latkans').innerHTML = lat;
+  $('#latkans').classList.toggle('on', toranLit);
   svg.classList.toggle('on', toranLit);
   svg.classList.toggle('lit', toranLit);
 }
@@ -560,8 +568,8 @@ const logoImg = new Image();
 logoImg.src = 'assets/logo.png';
 let auto = false, lastAuto = 0, nextGap = 900;
 
-function launch(tx = rnd(W * .12, W * .88), ty = rnd(H * .1, H * .45), hue = rnd(0, 360), onBoom, dur) {
-  const x = tx + rnd(-60, 60), y = H + 10, t = rnd(48, 62);
+function launch(tx = rnd(W * .12, W * .88), ty = rnd(H * .1, H * .45), hue = rnd(0, 360), onBoom, dur, sx = tx + rnd(-60, 60), sy = H + 10) {
+  const x = sx, y = sy, t = rnd(48, 62);
   rockets.push({ x, y, vx: (tx - x) / t, vy: (ty - y) / t, life: t, hue, onBoom, x0: x, y0: y, tx, ty, t0: performance.now(), dur: dur && dur * 1000 });
   sfx.whoosh(x, dur || t / 60);
 }
@@ -663,6 +671,7 @@ function frame(now) {
     } else { r.x += r.vx * dt; r.y += r.vy * dt; r.life -= dt; }
     fx.fillStyle = `hsl(${r.hue},100%,75%)`;
     fx.fillRect(r.x - 1, r.y - 1, 2.4, 2.4);
+    if (r.hero) for (let k = 0; k < 3; k++) sparkle(r.x + rnd(-2, 2), r.y + rnd(2, 8), .9);
     if (Math.random() < .6) parts.push({ x: r.x, y: r.y, vx: rnd(-.3, .3), vy: rnd(.2, .8), life: .7, decay: .04, hue: 35, size: 1.2, g: 0 });
     if (r.life <= 0) { explode(r.x, r.y, r.hue); r.onBoom?.(); rockets.splice(i, 1); }
   }
@@ -801,6 +810,7 @@ addEventListener('touchend', () => { tilt.hold = false; });
 function lightToran() {
   const svg = $('#toran'), bs = [...svg.querySelectorAll('.bulb')].sort((a, b) => a.dataset.x - b.dataset.x);
   svg.classList.add('on');
+  $('#latkans').classList.add('on');
   bs.forEach((c, i) => setTimeout(() => c.classList.add('on'), i * 18));
   return wait(bs.length * 18 + 350).then(() => { toranLit = true; svg.classList.add('lit'); });
 }
@@ -988,11 +998,17 @@ $('#intro').addEventListener('click', async () => {
   const intro = $('#intro');
   if (intro.dataset.go) return;
   intro.dataset.go = 1;
-  const fl = $('#intro .bigdiya .fl').getBoundingClientRect(), ox = fl.left + fl.width / 2, oy = fl.top + fl.height * .6;
   unlockMedia();
   keepAwake();
   flare();
-  const lit = wait(350).then(() => lightDiyas(ox, oy));
+  const lit = wait(200).then(() => new Promise(done => {
+    const bx = W / 2, by = H * .3;
+    launch(bx, by, 42, () => {
+      explode(bx, by, 10); glitter(bx, by); shake();
+      done(lightDiyas(bx, by));
+    }, 1.2, bx, H - 24);
+    rockets.at(-1).hero = true;
+  }));
   await intro.animate([{ opacity: 1 }, { opacity: 0, transform: 'scale(1.08)' }], { duration: 700, fill: 'forwards' }).finished;
   intro.remove();
   await lit;
