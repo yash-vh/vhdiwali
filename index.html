@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@1,500&family=Great+Vibes&family=Poppins:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <style>
 :root{
   --sky-top:#0b0620; --sky-mid:#1c0b2e; --sky-glow:#4a1a08;
@@ -65,6 +65,40 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 #title{font-family:'Great Vibes',cursive;font-weight:400;line-height:1.05;font-size:clamp(54px,min(16vw,13vh),130px)}
 #sub{font-family:'Great Vibes',cursive;font-size:clamp(32px,min(9vw,7vh),68px);line-height:1}
 #from{font-family:'Great Vibes',cursive;font-size:clamp(30px,min(8.5vw,6.5vh),60px);line-height:1.1;padding:.1em .2em;margin:-.1em 0}
+#cap{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;gap:.1em;padding:.5em 1em;white-space:nowrap;perspective:600px}
+#cap::before{content:"";position:absolute;inset:-55% -22%;z-index:-1;background:radial-gradient(closest-side,rgba(var(--night),.82),rgba(var(--night),.45) 60%,transparent)}
+#cap .kick{font:italic 500 clamp(18px,5.6vw,32px)/1.2 'Cormorant Garamond',serif;letter-spacing:.32em;color:#fff3dc;text-transform:lowercase;
+  text-shadow:0 0 12px rgba(255,200,120,.7),0 2px 2px rgba(0,0,0,.6)}
+#cap .hero{font:700 clamp(38px,12.5vw,92px)/1.05 'Cinzel',serif;letter-spacing:.08em;filter:drop-shadow(0 3px 0 rgba(70,25,0,.85)) drop-shadow(0 0 18px rgba(255,170,60,.65))}
+#cap .hero .l{display:inline-block;opacity:0;color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(180deg,#fffbe8 0%,#ffe08a 28%,#d4891f 50%,#ffd36b 64%,#fff6cf 82%,#e7a33a 100%);background-size:100% 240%;
+  animation:foil 2.6s ease-in-out infinite alternate}
+#cap .hero .sp{display:inline-block;width:.35em}
+@keyframes foil{from{background-position:0 0}to{background-position:0 100%}}
+#device{position:relative;width:min(36vw,21vh);aspect-ratio:9/19;perspective:900px;margin-top:clamp(6px,2vh,20px)}
+#device .rays{position:absolute;left:50%;top:45%;width:300%;aspect-ratio:1;translate:-50% -50%;opacity:0;
+  background:repeating-conic-gradient(from 0deg,rgba(255,206,110,.28) 0 5deg,transparent 5deg 15deg);
+  -webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent);mask-image:radial-gradient(closest-side,#000 20%,transparent);
+  animation:rot 18s linear infinite;transition:opacity 1.2s ease}
+#device.on .rays{opacity:1}
+#device .body{position:absolute;inset:0;border-radius:17%/8%;padding:5%;background:linear-gradient(145deg,#4a3658,#1a0f26 45%,#2c1d3a);
+  box-shadow:0 30px 60px rgba(0,0,0,.65),inset 0 0 0 1.5px rgba(255,220,160,.4),inset 0 0 0 4px rgba(0,0,0,.5);will-change:transform}
+#device .screen{position:relative;height:100%;border-radius:13%/6.2%;overflow:hidden;background:#05020e}
+#device .lit{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;
+  background:radial-gradient(120% 75% at 50% 72%,#ffd27a 0%,#ff7a1a 22%,#8e1252 55%,#1c0b2e 100%)}
+#device.on .lit{opacity:1}
+#device .lit svg{position:absolute;left:50%;bottom:24%;width:72%;translate:-50% 0;filter:drop-shadow(0 0 14px rgba(255,190,80,.9))}
+#device .sheen{position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.28) 50%,transparent 58%);translate:-120% 0}
+#device.on .sheen{animation:sheen 1.6s .2s ease-out forwards}
+@keyframes sheen{to{translate:120% 0}}
+#device .island{position:absolute;top:2.6%;left:50%;width:30%;height:3.2%;translate:-50% 0;border-radius:99px;background:#000}
+#device .glowring{position:absolute;inset:-6%;border-radius:20%/9.5%;box-shadow:0 0 50px 8px rgba(255,170,60,.0);transition:box-shadow 1s ease}
+#device.on .glowring{box-shadow:0 0 60px 10px rgba(255,170,60,.55)}
+#flameBox{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:3/4;translate:-50% -50%}
+#flameBox svg{width:100%;height:100%;overflow:visible}
+#flameBox .fk{transform-box:fill-box;transform-origin:50% 100%;animation:fl1 2.2s ease-in-out infinite}
+.leak{position:fixed;inset:-20%;z-index:9;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 50%,rgba(255,252,236,.97),rgba(255,206,110,.85) 30%,rgba(255,130,40,.35) 60%,transparent 80%)}
 #team{font-family:'Great Vibes',cursive;font-size:clamp(64px,min(19vw,15vh),150px);line-height:1.15;padding:.14em .3em;margin:calc(clamp(4px,1.5vh,14px) - .14em) 0;
   background-image:linear-gradient(100deg,var(--saffron),var(--gold-2) 14%,var(--pink) 28%,var(--violet) 42%,var(--teal) 56%,var(--gold-1) 70%,var(--magenta) 84%,var(--saffron));
   background-size:300% 100%;animation:shine 3.5s linear infinite;
@@ -135,6 +169,17 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
   background:radial-gradient(130% 90% at 50% 105%,rgba(var(--night),.6),rgba(var(--night),.94) 70%)}
 #toran .fl{filter:brightness(.35) saturate(.7);transition:filter 1.4s ease}
 #toran.on .fl{filter:none}
+#kandils{position:fixed;top:0;left:0;width:100%;z-index:4;pointer-events:none}
+#kandils .kd{position:absolute;top:0;transform-origin:50% 0;animation:swing 4s ease-in-out infinite alternate;will-change:transform;
+  filter:brightness(.35) saturate(.7);transition:filter 1.4s ease}
+#kandils.on .kd{filter:none}
+#kandils .cord{width:1.2px;margin:0 auto;background:linear-gradient(#5a1e00,#b8860b)}
+#kandils svg{display:block;overflow:visible}
+#kandils .ts{transform-box:fill-box;transform-origin:50% 0;animation:flutter 1.7s ease-in-out infinite alternate}
+#kandils .halo{opacity:.25;transition:opacity 1.4s ease}
+#kandils.on .halo{opacity:1;animation:flicker 1.3s ease-in-out infinite alternate}
+@keyframes flutter{from{transform:skewX(-7deg)}to{transform:skewX(6deg)}}
+@keyframes flicker{from{opacity:.7}to{opacity:1}}
 #latkans{position:fixed;top:0;left:0;width:100%;z-index:4;pointer-events:none}
 #latkans .lk{position:absolute;top:0;overflow:visible;transform-origin:50% 3px;animation:swing 3.4s ease-in-out infinite alternate;will-change:transform;
   filter:brightness(.35) saturate(.7);transition:filter 1.4s ease}
@@ -185,6 +230,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
 <div id="lanterns"></div>
 <div id="veil"></div>
 <canvas id="fx"></canvas>
+<div id="kandils" aria-hidden="true"></div>
 <div id="latkans" aria-hidden="true"></div>
 <svg id="toran" aria-hidden="true"></svg>
 <div id="diyas" aria-hidden="true"></div>
@@ -194,8 +240,13 @@ canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
   <div id="sub" class="gold write"></div>
   <div id="team" class="gold write" hidden></div>
   <div id="from" class="gold write" hidden></div>
+  <div id="cap" hidden></div>
+  <div id="device" hidden><div class="rays"></div><div class="glowring"></div>
+    <div class="body"><div class="screen"><div class="lit"><svg viewBox="0 0 64 56"><use href="#diya"/></svg></div><div class="sheen"></div><div class="island"></div></div></div>
+  <div id="flameBox" hidden><svg viewBox="0 0 60 80"><circle cx="30" cy="52" r="34" fill="url(#gHalo)"/>
+    <g class="fk"><path d="M30 2C46 30 52 52 30 78C8 52 14 30 30 2Z" fill="url(#gFlame)"/><path d="M30 34C38 48 40 60 30 74C20 60 22 48 30 34Z" fill="#fff8d6"/></g></svg></div></div>
   <div id="video" class="frame" hidden>
-    <video src="assets/team.mp4" playsinline preload="auto"></video>
+    <video src="assets/team.mp4" poster="assets/team.jpg" playsinline preload="auto"></video>
     <div class="ph">Team video</div>
     <button id="soundBtn" hidden></button>
   </div>
@@ -231,6 +282,7 @@ const TEXT = {
   sub: 'to all',
   team: 'Virtuallions',
   from: 'From Mobile Team',
+  story: [['from every', 'Screen'], ['to every', 'Home'], ['may this', 'Light'], ['find its way', 'to You']],
   finale: 'Wishing you and your family a Diwali full of light, joy and prosperity.',
   replay: 'Celebrate again',
   sound: 'Tap for sound',
@@ -337,7 +389,7 @@ function resize() {
   fxC.width = W * FDPR; fxC.height = H * FDPR;
   fx.setTransform(FDPR, 0, 0, FDPR, 0, 0);
   st.setTransform(DPR, 0, 0, DPR, 0, 0);
-  drawStars(); buildCity(); buildToran(); buildDiyas();
+  drawStars(); buildCity(); buildToran(); buildKandils(); buildDiyas();
 }
 
 function drawStars() {
@@ -486,6 +538,51 @@ function lightCity() {
   return wait(steps * 45 + 600).then(() => { cityLit = true; cities.forEach(c => c.classList.add('lit')); });
 }
 
+const KANDIL = [
+  { top: '#ffd27a', mid: '#ff8a1f', edge: '#c2410c', win: '#fff3c0', ts: ['#ffb300', '#ff6d00', '#e53935'] },
+  { top: '#ffb3d4', mid: '#e91e63', edge: '#8e1252', win: '#ffe6f2', ts: ['#ff80ab', '#e91e63', '#ffb300'] },
+];
+document.querySelector('svg defs').insertAdjacentHTML('beforeend', KANDIL.map((k, i) => `
+  <linearGradient id="kTop${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${k.top}"/><stop offset="1" stop-color="${k.mid}"/></linearGradient>
+  <radialGradient id="kBody${i}" cx=".5" cy=".5" r=".75"><stop offset="0" stop-color="${k.win}"/><stop offset=".45" stop-color="${k.mid}"/><stop offset="1" stop-color="${k.edge}"/></radialGradient>`).join('') +
+  '<radialGradient id="kHalo"><stop offset="0" stop-color="#ffc35a" stop-opacity=".6"/><stop offset=".5" stop-color="#ff8a1f" stop-opacity=".2"/><stop offset="1" stop-color="#ff8a1f" stop-opacity="0"/></radialGradient>');
+
+function kandilSvg(v, s) {
+  const k = KANDIL[v], R = rng(v * 31 + 5);
+  let ts = '';
+  for (let i = 0; i < 9; i++) {
+    const x = -12 + i * 3, len = 44 + R() * 22, w = 2.6;
+    ts += `<path d="M${x} 64C${x + 1.5} ${64 + len * .35} ${x - 1.5} ${64 + len * .7} ${x + .6} ${64 + len}h${w}C${x + 1.5 + w} ${64 + len * .7} ${x - 1.5 + w} ${64 + len * .35} ${x + w} 64Z" fill="${k.ts[i % 3]}"/>`;
+  }
+  const dia = (cx, cy, rx, ry, f) => `<path d="M${cx} ${cy - ry}L${cx + rx} ${cy}L${cx} ${cy + ry}L${cx - rx} ${cy}Z" fill="${f}"/>`;
+  return `<svg width="${64 * s}" height="${140 * s}" viewBox="-32 -2 64 140">
+    <circle class="halo" cx="0" cy="36" r="40" fill="url(#kHalo)"/>
+    <rect x="-4" y="-2" width="8" height="6" rx="1.5" fill="#5a1e00"/>
+    <path d="M-5 4H5L28 22H-28Z" fill="url(#kTop${v})"/>
+    <path d="M-28 22H28V48H-28Z" fill="url(#kBody${v})"/>
+    <path d="M-28 22H-17V48H-28ZM17 22H28V48H17Z" fill="#000" opacity=".2"/>
+    ${dia(0, 35, 10, 10, k.win)}${dia(-22.5, 35, 4, 7, k.win)}${dia(22.5, 35, 4, 7, k.win)}
+    <path d="M-28 48H28L14 62H-14Z" fill="url(#kTop${v})"/>
+    <path d="M-14 62H14L13 65H-13Z" fill="#5a1e00"/>
+    <path d="M-5 4L-17 22M5 4L17 22M-28 22H28M-28 48H28M-17 22V48M17 22V48M-17 48L-9 62M17 48L9 62" stroke="${k.edge}" stroke-width="1.1" fill="none"/>
+    <g class="ts" style="animation-delay:-${(R() * 1.7).toFixed(2)}s">${ts}</g>
+  </svg>`;
+}
+
+function buildKandils() {
+  const k = Math.min(1, W / 430) * (W < 600 ? .9 : 1.25);
+  const spots = [
+    { x: W - 34 * k, cord: 92 * k, s: 1 * k, v: 0 },
+    { x: W - 86 * k, cord: 36 * k, s: .72 * k, v: 1 },
+    { x: 30 * k, cord: 62 * k, s: .82 * k, v: 0 },
+  ];
+  if (W >= 600) spots.push({ x: 92 * k, cord: 24 * k, s: .62 * k, v: 0 }, { x: W - 140 * k, cord: 120 * k, s: .66 * k, v: 0 });
+  $('#kandils').innerHTML = spots.map((p, i) =>
+    `<div class="kd" style="left:${(p.x - 32 * p.s).toFixed(1)}px;animation-duration:${(3.6 + i * .45).toFixed(2)}s;animation-delay:-${(i * 1.3).toFixed(2)}s">
+      <div class="cord" style="height:${p.cord.toFixed(1)}px"></div>${kandilSvg(p.v, p.s)}</div>`).join('');
+  $('#kandils').classList.toggle('on', toranLit);
+}
+
 function buildDiyas() {
   const n = Math.max(5, Math.min(14, Math.round(W / 85)));
   $('#diyas').innerHTML = Array.from({ length: n }, () => `<svg class="diya${diyasLit ? ' lit' : ''}" viewBox="0 0 64 56"><use href="#diya"/></svg>`).join('');
@@ -512,7 +609,7 @@ const SFX_FILES = { bang: 6, whistle: 4, crackle: 2 };
 const sfx = {
   bufs: { bang: [], whistle: [], crackle: [] },
   raw: Object.fromEntries(Object.entries(SFX_FILES).map(([k, n]) =>
-    [k, Array.from({ length: n }, (_, i) => fetch(`assets/sfx/${k}${i + 1}.mp3`).then(r => r.arrayBuffer()))])),
+    [k, Array.from({ length: n }, (_, i) => fetch(`assets/sfx/${k}${i + 1}.mp3`).then(r => r.arrayBuffer()).catch(() => null))])),
   init() {
     if (this.ctx) return;
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -521,8 +618,8 @@ const sfx = {
     this.out = c.createGain(); this.out.gain.value = SFX_VOL; this.out.connect(c.destination);
     this.last = 0;
     for (const [k, list] of Object.entries(this.raw))
-      list.forEach(pr => pr.then(d => new Promise((ok, no) => c.decodeAudioData(d, ok, no)))
-        .then(buf => this.bufs[k].push(buf)).catch(() => {}));
+      list.forEach(pr => pr.then(d => d && new Promise((ok, no) => c.decodeAudioData(d, ok, no)))
+        .then(buf => buf && this.bufs[k].push(buf)).catch(() => {}));
   },
   play(kind, x, gain, at = 0, rate = rnd(.92, 1.08)) {
     const list = this.bufs[kind];
@@ -627,7 +724,7 @@ function sparkleRing(el, n = 70) {
   }
 }
 
-const PAR = [['#stars', -16, -12], ['#cityFar', -8, -3], ['#cityNear', -20, -6], ['#diyas', 12, 0], ['#intro .brand', -14, -9], ['#intro .shubh', -7, -4]].map(([q, ax, ay]) => [document.querySelector(q), ax, ay]);
+const PAR = [['#stars', -16, -12], ['#cityFar', -8, -3], ['#cityNear', -20, -6], ['#kandils', -10, -4], ['#diyas', 12, 0], ['#intro .brand', -14, -9], ['#intro .shubh', -7, -4]].map(([q, ax, ay]) => [document.querySelector(q), ax, ay]);
 const stageEl = $('#stage'), altarEl = $('#intro .altar'), lanternsEl = $('#lanterns');
 function applyTilt(x, y) {
   for (const [el, ax, ay] of PAR) if (el.isConnected) el.style.translate = `${(x * ax).toFixed(1)}px ${(y * ay).toFixed(1)}px`;
@@ -714,10 +811,11 @@ function frame(now) {
   for (let i = comets.length - 1; i >= 0; i--) {
     const c = comets[i], t = Math.min((now - c.t0) / c.dur, 1), e = ease(t), u = 1 - e;
     const x = u * u * c.x0 + 2 * u * e * c.cx + e * e * c.x1, y = u * u * c.y0 + 2 * u * e * c.cy + e * e * c.y1;
-    const g = fx.createRadialGradient(x, y, 0, x, y, 11);
+    const cr = c.r || 11, g = fx.createRadialGradient(x, y, 0, x, y, cr);
     g.addColorStop(0, 'rgba(255,250,225,1)'); g.addColorStop(.35, 'rgba(255,190,80,.85)'); g.addColorStop(1, 'rgba(255,120,30,0)');
-    fx.fillStyle = g; fx.beginPath(); fx.arc(x, y, 11, 0, 7); fx.fill();
+    fx.fillStyle = g; fx.beginPath(); fx.arc(x, y, cr, 0, 7); fx.fill();
     sparkle(x, y, .4); sparkle(x, y, .25);
+    if (c.r) { sparkle(x, y, .8); sparkle(x, y, 1.1); }
     if (t >= 1) { comets.splice(i, 1); c.done(); }
   }
   requestAnimationFrame(frame);
@@ -811,40 +909,55 @@ function lightToran() {
   const svg = $('#toran'), bs = [...svg.querySelectorAll('.bulb')].sort((a, b) => a.dataset.x - b.dataset.x);
   svg.classList.add('on');
   $('#latkans').classList.add('on');
+  $('#kandils').classList.add('on');
   bs.forEach((c, i) => setTimeout(() => c.classList.add('on'), i * 18));
   return wait(bs.length * 18 + 350).then(() => { toranLit = true; svg.classList.add('lit'); });
 }
 
-function forgeShape(el, paint, pal, rockets = 1, max = 1400) {
+function forgeShape(el, paint, pal, rockets = 1, max = 1400, hold = false) {
   const r = el.getBoundingClientRect(), w = Math.ceil(r.width), h = Math.ceil(r.height);
   const step = Math.max(2, Math.round(Math.sqrt(w * h / max / 3))), pts = [];
-  try {
+  if (Array.isArray(paint)) paint.forEach(([u, v]) => pts.push([u * w, v * h]));
+  else try {
     const c = document.createElement('canvas'), g = c.getContext('2d', { willReadFrequently: true });
     c.width = w; c.height = h;
     paint(g, w, h);
     const data = g.getImageData(0, 0, w, h).data;
     for (let y = 0; y < h; y += step) for (let x = 0; x < w; x += step) if (data[(y * w + x) * 4 + 3] > 140) pts.push([x, y]);
   } catch {}
-  pts.sort(() => Math.random() - .5).length = Math.min(pts.length, max);
+  for (let i = pts.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [pts[i], pts[j]] = [pts[j], pts[i]]; }
+  pts.length = Math.min(pts.length, max);
   const root = getComputedStyle(document.documentElement), colors = pal.map(v => root.getPropertyValue(v).trim());
   const cx = r.left + w / 2, cy = r.top + h / 2;
-  let left = rockets;
+  const n = Math.max(1, rockets);
+  let left = n;
   return new Promise(done => {
-    for (let k = 0; k < rockets; k++) {
-      const ox = cx + (k - (rockets - 1) / 2) * w * .38;
-      launch(ox, cy, rnd(30, 55), async () => {
-        shake();
-        for (let i = k; i < pts.length; i += rockets) {
-          const [x, y] = pts[i], a = rnd(0, 7), v = rnd(2, 9);
-          forge.push({ x: ox, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, tx: r.left + x, ty: r.top + y, f: x / w, d: rnd(8, 30) | 0, a: 1, s: step * rnd(.7, 1.1), pal: colors });
-        }
-        if (--left) return;
-        await wait(2000);
-        el.style.clipPath = 'none';
-        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: 'ease-out', fill: 'forwards' });
-        forgeFade = true;
-        done();
-      });
+    const boom = (k, ox) => async () => {
+      shake();
+      for (let i = k; i < pts.length; i += n) {
+        const [x, y] = pts[i], a = rnd(0, 7), v = rnd(2, 9);
+        forge.push({ x: ox, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, tx: r.left + x, ty: r.top + y, f: x / w, d: rnd(8, 30) | 0, a: 1, s: step * rnd(.7, 1.1), pal: colors });
+      }
+      if (--left) return;
+      await wait(2000);
+      el.style.clipPath = 'none';
+      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: 'ease-out', fill: 'forwards' });
+      if (!hold) forgeFade = true;
+      done();
+    };
+    if (rockets < 0) {
+      const R = Math.max(w, h) * 1.6;
+      for (const [x, y] of pts) {
+        const a = rnd(0, 7), rr = R * rnd(.8, 1.2);
+        forge.push({ x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr, vx: -Math.sin(a) * 7, vy: Math.cos(a) * 7, tx: r.left + x, ty: r.top + y, f: x / w, d: rnd(6, 26) | 0, a: 1, s: step * rnd(.7, 1.1), pal: colors });
+      }
+      wait(2000).then(() => { el.style.clipPath = 'none'; el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: 'ease-out', fill: 'forwards' }); if (!hold) forgeFade = true; done(); });
+      return;
+    }
+    if (!rockets) { explode(cx, cy, 45); boom(0, cx)(); return; }
+    for (let k = 0; k < n; k++) {
+      const ox = cx + (k - (n - 1) / 2) * w * .38;
+      launch(ox, cy, rnd(30, 55), boom(k, ox));
     }
   });
 }
@@ -884,7 +997,7 @@ function lightDiyas(ox, oy) {
   }), i * 120)))).then(() => {
     diyasLit = true;
     veil.style.opacity = 0;
-    return Promise.all([lightToran(), lightCity()]);
+    return lightToran();
   });
 }
 
@@ -904,8 +1017,8 @@ function flip(change) {
 }
 
 function show(el, kf, dur = 900) { el.hidden = false; return el.animate(kf, { duration: dur, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }).finished; }
-async function hide(els) {
-  await Promise.all(els.map(el => el.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.94)' }], { duration: 600, fill: 'forwards' }).finished));
+async function hide(els, dur = 600) {
+  await Promise.all(els.map(el => el.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.94)' }], { duration: dur, fill: 'forwards' }).finished));
   els.forEach(el => el.hidden = true);
 }
 
@@ -913,7 +1026,6 @@ const music = $('#music'), video = $('#video video');
 let videoOk = true;
 video.onerror = () => { videoOk = false; $('#video').classList.add('empty'); };
 if (video.error || video.networkState === 3) video.onerror();
-
 function unlockMedia() {
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
   music.volume = MUSIC_VOL;
@@ -956,27 +1068,156 @@ async function playVideo() {
   fadeMusic(MUSIC_VOL);
 }
 
+let T0 = 0;
+const songT = () => !music.paused && music.currentTime > 0 ? music.currentTime : (performance.now() - T0) / 1000;
+const at = sec => new Promise(ok => (function chk() { songT() >= sec ? ok() : requestAnimationFrame(chk); })());
+
+function reset(el, text) {
+  el.getAnimations().forEach(a => a.cancel());
+  el.style.clipPath = ''; el.style.opacity = '';
+  if (text != null) el.textContent = text;
+  el.hidden = false;
+}
+
+function paintFlame(g, w, h) {
+  const k = Math.min(w / 60, h / 80);
+  g.translate((w - 60 * k) / 2, (h - 80 * k) / 2); g.scale(k, k); g.fillStyle = '#fff';
+  g.fill(new Path2D('M30 2C46 30 52 52 30 78C8 52 14 30 30 2Z'));
+}
+
+let FLAME_PTS = [];
+setTimeout(() => {
+  const w = 60, h = 80, c = document.createElement('canvas'), g = c.getContext('2d', { willReadFrequently: true });
+  c.width = w; c.height = h; paintFlame(g, w, h);
+  const d = g.getImageData(0, 0, w, h).data;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 140) FLAME_PTS.push([(x + Math.random()) / w, (y + Math.random()) / h]);
+}, 1500);
+
+async function caption([kick, hero]) {
+  const cap = $('#cap');
+  reset(cap);
+  cap.innerHTML = `<div class="kick">${kick}</div><div class="hero">${[...hero].map((ch, i) => ch === ' ' ? '<span class="sp"></span>' : `<span class="l" style="animation-delay:-${(i * .22).toFixed(2)}s">${ch}</span>`).join('')}</div>`;
+  const k = cap.querySelector('.kick'), ls = [...cap.querySelectorAll('.l')];
+  const a = k.animate([{ opacity: 0, letterSpacing: '.9em', filter: 'blur(6px)' }, { opacity: 1, letterSpacing: '.32em', filter: 'blur(0)' }],
+    { duration: 1100, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }).finished;
+  await wait(350);
+  await Promise.all([a, ...ls.map((l, i) => l.animate([{ opacity: 0, transform: 'translateY(45%) rotateX(-95deg) scale(.8)' }, { opacity: 1, transform: 'none' }],
+    { duration: 750, delay: i * 70, easing: 'cubic-bezier(.2,1.3,.4,1)', fill: 'forwards' }).finished)]);
+}
+function captionOut() {
+  const cap = $('#cap'), k = cap.querySelector('.kick'), ls = [...cap.querySelectorAll('.l')];
+  return Promise.all([
+    k && k.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(6px)' }], { duration: 450, fill: 'forwards' }).finished,
+    ...ls.map((l, i) => l.animate([{ opacity: 1, transform: 'none', filter: 'blur(0)' }, { opacity: 0, transform: 'translateY(-40%) scale(1.08)', filter: 'blur(6px)' }],
+      { duration: 500, delay: i * 35, easing: 'ease-in', fill: 'forwards' }).finished),
+  ]);
+}
+
+function lightHomes(x, y) {
+  document.querySelectorAll('.city .w:not(.on)').forEach(w => { if (Math.abs(w.dataset.x - 40 - x) < W / 12) w.classList.add('on'); });
+  for (let k = 0; k < 22; k++) sparkle(x, y, 1.8);
+  sfx.play('crackle', x, .08, 0, rnd(1.3, 1.7));
+  buzz(6);
+}
+
+function sendLightHome(x0, y0) {
+  const near = $('#cityNear').getBoundingClientRect(), n = 16;
+  document.querySelectorAll('.city').forEach(c => c.classList.add('on'));
+  for (let i = 0; i < n; i++) {
+    const x1 = W * (i + .5) / n + rnd(-10, 10), y1 = near.top + near.height * rnd(.35, .7);
+    setTimeout(() => comets.push({ x0, y0, x1, y1, cx: (x0 + x1) / 2 + rnd(-40, 40), cy: Math.min(y0, y1) - rnd(20, 90), t0: performance.now(), dur: rnd(900, 1200), r: 15, done: () => lightHomes(x1, y1) }), i * 120);
+  }
+}
+
+const atBeat = sec => {
+  const b = beats.list && beats.list.find(x => x.t >= sec);
+  return at(b && b.t - sec < .7 ? b.t : sec);
+};
+
+async function story() {
+  const device = $('#device'), body = device.querySelector('.body'), flameBox = $('#flameBox');
+  const pose = (t, dur, easing = 'cubic-bezier(.2,.8,.2,1)') => body.animate(t, { duration: dur, easing, fill: 'forwards' }).finished;
+  const centre = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+  await at(3);
+  flip(() => reset(device));
+  const enter = pose([{ transform: 'translateY(60px) rotateY(-55deg) rotateX(18deg) scale(.6)', opacity: 0 }, { transform: 'rotateY(-14deg) rotateX(8deg)', opacity: 1 }], 1500);
+  const cap1 = wait(400).then(() => caption(TEXT.story[0]));
+  await enter;
+  device.classList.add('on');
+  sparkleRing(device.querySelector('.body'), 50);
+  buzz(12);
+  pose([{ transform: 'rotateY(-14deg) rotateX(8deg)' }, { transform: 'rotateY(10deg) rotateX(4deg)' }], 4200, 'ease-in-out');
+  await cap1;
+
+  await atBeat(8.2);
+  await captionOut();
+  const tilt = pose([{ transform: 'rotateY(10deg) rotateX(4deg)' }, { transform: 'translateY(-10px) rotateX(38deg) scale(.92)' }], 800);
+  const cap2 = caption(TEXT.story[1]);
+  await tilt;
+  const [sx, sy] = centre(device);
+  sendLightHome(sx, sy);
+  await cap2;
+  await wait(1600);
+  lightCity();
+
+  await atBeat(13.6);
+  reset(flameBox); flameBox.style.opacity = 0;
+  device.classList.remove('on');
+  await captionOut();
+  const [px, py] = centre(device);
+  flameBox.getBoundingClientRect();
+  await pose([{ transform: 'translateY(-10px) rotateX(38deg) scale(.92)', opacity: 1 }, { transform: 'rotateX(0) scale(.04)', opacity: 0 }], 650, 'cubic-bezier(.6,0,.4,1)');
+  explode(px, py, 40);
+  const formed = forgeShape(flameBox, FLAME_PTS.length ? FLAME_PTS : paintFlame, GOLD, -1, 1300);
+  await wait(300);
+  await Promise.all([caption(TEXT.story[2]), formed]);
+
+  await atBeat(18.6);
+  await captionOut();
+  const cap4 = caption(TEXT.story[3]);
+  await wait(900);
+  const leak = document.createElement('div');
+  leak.className = 'leak';
+  document.body.appendChild(leak);
+  flameBox.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(-4vh) scale(3)', opacity: 1, offset: .55 }, { transform: 'translateY(-8vh) scale(14)', opacity: 0 }],
+    { duration: 1500, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+  leak.animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1)', offset: .55 }, { opacity: 0, transform: 'scale(1.5)' }],
+    { duration: 2600, delay: 500, easing: 'ease-out', fill: 'forwards' }).finished.then(() => leak.remove());
+  await wait(1300);
+  shake(); burst(6, 120);
+  await cap4;
+  await at(23);
+  await Promise.all([captionOut(), hide([device], 500)]);
+  $('#cap').hidden = true;
+}
+
 async function run() {
   auto = true; burst(4);
-  await wait(700);
-  await write($('#title'), 2400);
-  await write($('#sub'), 1000);
-  await wait(500);
+  const title = $('#title'), sub = $('#sub'), team = $('#team'), from = $('#from');
+  title.hidden = sub.hidden = true;
+  await story();
 
-  const team = $('#team');
+  await atBeat(24);
+  flip(() => reset(title));
+  await write(title, 3000);
+  await atBeat(27.4);
+  flip(() => reset(sub));
+  await wait(250);
+  await write(sub, 1400);
+
+  await at(30.9);
   flip(() => team.hidden = false);
-  await wait(300);
   await forgeShape(team, paintText(team), MULTI);
   sparkleRing(team); burst(3, 140);
-  await wait(900);
 
-  const from = $('#from');
+  await atBeat(36.2);
   flip(() => from.hidden = false);
   await wait(300);
-  await write(from, 1500);
-  await wait(3200);
+  await write(from, 2000);
 
-  await hide([$('#title'), $('#sub'), team, from]);
+  await at(41.2);
+  await hide([title, sub, team, from], 1000);
   await playVideo();
   await hide([$('#video')]);
 
@@ -998,6 +1239,7 @@ $('#intro').addEventListener('click', async () => {
   const intro = $('#intro');
   if (intro.dataset.go) return;
   intro.dataset.go = 1;
+  T0 = performance.now();
   unlockMedia();
   keepAwake();
   flare();
@@ -1013,6 +1255,7 @@ $('#intro').addEventListener('click', async () => {
   intro.remove();
   await lit;
   await wait(400);
+  await Promise.all([document.fonts.load('700 40px Cinzel'), document.fonts.load('italic 500 20px "Cormorant Garamond"')]).catch(() => {});
   await document.fonts.ready;
   run();
 });
